@@ -1,0 +1,54 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2" style="text-align: right;">
+                <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    (change)="importExcel($event)" #fileInput>
+                <button type="button" (click)="fileInput.click()" class="btn btn-secondary btn-sm mr-1">
+                    Importar Excel</button>
+            </div>
+            <div class="col-md-2" style="text-align: right; padding-top: 0.5rem;">
+                <a target="_self" href="../../../../../assets/excel/ProductsTemplate.xlsx"
+                    download="ProductsTemplate.xlsx">
+                    Descargar Template
+                </a>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+<div>
+    <nb-card>
+        <nb-card-header>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <span>Lista de Productos</span>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-block"
+                        routerLink="/products/add-product">Agregar</button>
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <div class="row">
+                <div class="col-md-4">
+                    <input [hidden]="products.length == 0 && searchIsEmpty == true" type="text" #searchRef
+                        class="form-control mb-3" placeholder="Buscar producto">
+                </div>
+            </div>
+            <div *ngIf="products.length == 0 && searchIsEmpty" class="alert alert-primary text-center" role="alert">
+                <strong>No existen productos registrados.</strong>
+            </div>
+            <div *ngIf="products.length == 0 && !searchIsEmpty" class="alert alert-primary text-center" role="alert">
+                <strong>La busqueda no encontró resultados.</strong>
+            </div>
+            <ag-grid-angular *ngIf="products.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+                [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="products"
+                [frameworkComponents]="frameworkComponents">
+            </ag-grid-angular>
+        </nb-card-body>
+    </nb-card>
+</div>

@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agregar Entrada</h4>
+</div>
+<div class="modal-body">
+    <div *ngIf="messageError != null" class="alert alert-danger mb-3" role="alert">
+        {{messageError}}
+    </div>
+    <form [formGroup]="addEntryForm" (ngSubmit)="addEntry()">
+        <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+        <div class="form-group">
+            <label><strong>Monto (Bs.)*</strong></label>
+            <input type="text" class="form-control" placeholder="Monto" formControlName="amount">
+            <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert text-danger">
+                <div *ngIf="amount.errors.required">
+                    El monto es requerido.
+                </div>
+                <div *ngIf="amount.errors.pattern">
+                    Solo se aceptan números.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><strong>Razón*</strong></label>
+            <textarea class="form-control" placeholder="Razón" formControlName="reason"></textarea>
+            <div *ngIf="reason.invalid && (reason.dirty || reason.touched)" class="alert text-danger">
+                <div *ngIf="reason.errors.required">
+                    La razón es requerida.
+                </div>
+                <div *ngIf="reason.errors.maxlength">
+                    La razón debe tener máximo 500 caracteres.
+                </div>
+                <div *ngIf="reason.errors.minlength">
+                    La razón debe tener al menos 3 caracteres.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><strong>Tipo de entrada*</strong></label>
+            <select class="form-control" formControlName="entryType">
+                <option [value]="1">Haber</option>
+                <option [value]="2">Debe</option>
+            </select>
+            <div *ngIf="entryType.invalid && (entryType.dirty || entryType.touched)" class="alert text-danger">
+                <div *ngIf="entryType.errors.required">
+                    El tipo de entrada es requerida.
+                </div>
+            </div>
+        </div>
+        <div class="float-right">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button [disabled]="!addEntryForm.valid" type="button" class="btn btn-outline-dark"
+        (click)="addEntry()">Aceptar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancelar</button>
+</div>

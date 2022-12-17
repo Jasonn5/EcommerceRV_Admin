@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>{{textHeader}}</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="sellerEditorForm" (ngSubmit)="addOrUpdateSeller()">
+                    <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+                    <div class="form-group">
+                        <label><strong>Nombre*</strong></label>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert text-danger">
+                            <div *ngIf="name.errors.required">
+                                El nombre del vendedor es requerido.
+                            </div>
+                            <div *ngIf="name.errors.maxlength">
+                                El nombre debe tener máximo 100 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Código</strong></label>
+                        <input type="text" class="form-control" placeholder="Código" formControlName="code">
+                        <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert text-danger">
+                            <div *ngIf="code.errors.maxlength">
+                                El código debe tener máximo 100 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Dirección</strong></label>
+                        <input type="text" class="form-control" placeholder="Dirección" formControlName="address">
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert text-danger">
+                            <div *ngIf="address.errors.maxlength">
+                                La dirección debe tener máximo 500 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Celular</strong></label>
+                                <input type="text" class="form-control" placeholder="Celular"
+                                    formControlName="cellPhone">
+                                <div *ngIf="cellPhone.invalid && (cellPhone.dirty || cellPhone.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="cellPhone.errors.maxlength">
+                                        El celular debe tener máximo 50 caracteres.
+                                    </div>
+                                    <div *ngIf="cellPhone.errors.minlength">
+                                        El celular debe tener al menos 5 caracteres.
+                                    </div>
+                                    <div *ngIf="cellPhone.errors.pattern">
+                                        El numero de celular es invalido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Teléfono Fijo</strong></label>
+                                <input type="text" class="form-control" placeholder="Teléfono Fijo"
+                                    formControlName="landLine">
+                                <div *ngIf="landLine.invalid && (landLine.dirty || landLine.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="landLine.errors.maxlength">
+                                        El teléfono debe tener máximo 50 caracteres.
+                                    </div>
+                                    <div *ngIf="landLine.errors.minlength">
+                                        El teléfono debe tener al menos 5 caracteres.
+                                    </div>
+                                    <div *ngIf="landLine.errors.pattern">
+                                        El numero de telefono es invalido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Email*</strong></label>
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert text-danger">
+                            <div *ngIf="email.errors.required">
+                                La dirección de correo electrónico es requerida.
+                            </div>
+                            <div *ngIf="email.errors.email">
+                                Dirección de correo electrónico no válida.
+                            </div>
+                            <div *ngIf="email.errors.pattern">
+                                El email es invalido.
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!sellerEditorForm.valid" class="btn btn-primary">
+                        {{textButtom}}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

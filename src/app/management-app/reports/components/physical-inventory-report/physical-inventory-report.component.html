@@ -1,0 +1,33 @@
+<nb-card>
+    <nb-card-header>Parámetros</nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-6">
+                <label style="font-weight: bold;">Ubicación:</label>
+                <select *ngIf="locations.length != 0" [(ngModel)]="locationId" class="form-control">
+                    <option *ngFor="let location of locations" [value]="location.id">
+                        {{location.name}}
+                    </option>
+                </select>
+                <div *ngIf="locations.length == 0" class="alert alert-primary text-center" role="alert">
+                    <strong>En este momento no existen ubicaciones. Agrega una <a class="action-Link"
+                            routerLink="/admin/add-location">aquí</a>.</strong>
+                </div>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <div class="pt-4" style="text-align: center;">
+                    <button type="button" class="btn btn-primary" [disabled]="locationId == 0"
+                        (click)="getPdf()">Generar PDF</button>
+                </div>
+            </div>                     
+            <div class="col-md-2">
+                <div class="pt-4" style="text-align: center;">
+                    <button type="button" class="btn btn-primary" [disabled]="locationId == 0"
+                        (click)="getExcel()">Generar Excel</button>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-6">
+        <input [hidden]="products.length == 0 && searchIsEmpty == true" type="text" #searchRef class="form-control mb-3"
+            placeholder="Buscar producto">
+    </div>
+</div>
+<div *ngIf="products.length == 0 && searchIsEmpty" class="alert alert-primary text-center" role="alert">
+    <strong>No existen productos registrados.</strong>
+</div>
+<div *ngIf="products.length == 0 && !searchIsEmpty" class="alert alert-primary text-center" role="alert">
+    <strong>La busqueda no genero resultados.</strong>
+</div>
+<ag-grid-angular *ngIf="products.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+    [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="products"
+    (selectionChanged)="onSelectionChanged()">
+</ag-grid-angular>

@@ -1,0 +1,109 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>{{textHeader}}</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="businessServiceEditorForm" (ngSubmit)="businessServiceEditor()">
+                    <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label><strong>Código*</strong></label>
+                                <input type="text" class="form-control" placeholder="Código" formControlName="code">
+                                <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert text-danger">
+                                    <div *ngIf="name.errors.required">
+                                        El código del servicio es requerido.
+                                    </div>
+                                    <div *ngIf="code.errors.maxlength">
+                                        El código debe tener máximo 100 caracteres.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label><strong>Nombre*</strong></label>
+                                <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+                                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert text-danger">
+                                    <div *ngIf="name.errors.required">
+                                        El nombre del servicio es requerido.
+                                    </div>
+                                    <div *ngIf="name.errors.maxlength">
+                                        El nombre debe tener máximo 100 caracteres.
+                                    </div>
+                                    <div *ngIf="name.errors.minlength">
+                                        El nombre debe tener al menos 3 caracteres.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Precio</strong></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Bs.</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Precio"
+                                        formControlName="price">
+                                </div>
+
+                                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert text-danger">
+                                    <div *ngIf="price.errors.pattern">
+                                        Sólo se aceptan números.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Descripción</strong></label>
+                        <textarea class="form-control" placeholder="Descripción"
+                            formControlName="description"></textarea>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="description.errors.required">
+                                La descripción es requerida.
+                            </div>
+                            <div *ngIf="description.errors.maxlength">
+                                La Descripción debe tener máximo 500 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Duración</strong></label>
+                                <input class="form-control" placeholder="Duración" formControlName="duration">
+                                <div *ngIf="duration.invalid && (duration.dirty || duration.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="duration.errors.maxlength">
+                                        La duración debe tener máximo 100 caracteres.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="color-text"><strong>.</strong></label>
+                                <select class="form-control" formControlName="durationMeasureId">
+                                    <option [value]="0">Ninguna</option>
+                                    <option [value]="1">Minutos</option>
+                                    <option [value]="2">Horas</option>
+                                    <option [value]="3">Días</option>
+                                    <option [value]="4">Semanas</option>
+                                    <option [value]="5">Meses</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!businessServiceEditorForm.valid" class="btn btn-primary">
+                        {{textButtom}}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<nb-card>
+    <nb-card-header>
+        <span>Lista de Vendedores</span>
+        <button type="button" class="btn btn-primary float-right" routerLink="/sellers/add-seller">Agregar</button>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-4">
+                <input [hidden]="sellers.length == 0 && searchIsEmpty == true" type="text" #searchRef
+                    class="form-control mb-3" placeholder="Buscar Vendedor">
+            </div>
+        </div>
+        <div *ngIf="sellers.length == 0 && searchIsEmpty" class="alert alert-primary text-center mb-0" role="alert">
+            <strong>En este momento no existen vendedores registrados.</strong>
+        </div>
+        <div *ngIf="sellers.length == 0 && !searchIsEmpty" class="alert alert-primary text-center mb-0" role="alert">
+            <strong>La busqueda no encontró resultados.</strong>
+        </div>
+        <ag-grid-angular *ngIf="sellers.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+            [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="sellers"
+            [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </nb-card-body>
+</nb-card>

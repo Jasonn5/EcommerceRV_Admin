@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>{{textHeader}}</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="providerEditForm" (ngSubmit)="sendProviderData()">
+                    <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+                    <div class="form-group">
+                        <label><strong>Nombre*</strong></label>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert text-danger">
+                            <div *ngIf="name.errors.required">
+                                El nombre del proveedor es requerido.
+                            </div>
+                            <div *ngIf="name.errors.maxlength">
+                                El nombre debe tener máximo 100 caracteres.
+                            </div>
+                            <div *ngIf="name.errors.minlength">
+                                El nombre debe tener mínimo 3 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Dirección</strong></label>
+                        <input type="text" class="form-control" placeholder="Dirección" formControlName="address">
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert text-danger">
+                            <div *ngIf="address.errors.maxlength">
+                                El nombre debe tener máximo 500 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Celular</strong></label>
+                                <input type="text" class="form-control" placeholder="Celular"
+                                    formControlName="cell-phone">
+                                <div *ngIf="cellphone.invalid && (cellphone.dirty || cellphone.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="cellphone.errors.maxlength">
+                                        El celular debe tener máximo 50 caracteres.
+                                    </div>
+                                    <div *ngIf="cellphone.errors.minlength">
+                                        El celular debe tener al menos 5 caracteres.
+                                    </div>
+                                    <div *ngIf="cellphone.errors.pattern">
+                                        El número de celular es inválido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Teléfono</strong></label>
+                                <input type="text" class="form-control" placeholder="Teléfono"
+                                    formControlName="land-line">
+                                <div *ngIf="landLine.invalid && (landLine.dirty || landLine.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="landLine.errors.maxlength">
+                                        El teléfono debe tener máximo 50 caracteres.
+                                    </div>
+                                    <div *ngIf="landLine.errors.minlength">
+                                        El teléfono debe tener al menos 5 caracteres.
+                                    </div>
+                                    <div *ngIf="landLine.errors.pattern">
+                                        El número de teléfono es inválido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Email</strong></label>
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert text-danger">
+                            <div *ngIf="email.errors.email">
+                                Dirección de correo electrónico no válido.
+                            </div>
+                            <div *ngIf="email.errors.pattern">
+                                El email es inválido.
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!providerEditForm.valid" class="btn btn-primary">
+                        {{textButtom}}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

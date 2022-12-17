@@ -1,0 +1,15 @@
+<nb-card>
+    <nb-card-header>
+        <span>Lista de Categorías</span>
+        <button type="button" class="btn btn-primary float-right" routerLink="/admin/add-category">Agregar</button>
+    </nb-card-header>
+    <nb-card-body>
+        <div *ngIf="categories.length == 0" class="alert alert-primary text-center" role="alert">
+            <strong>No existen categorías registradas.</strong>
+        </div>
+        <ag-grid-angular *ngIf="categories.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+            [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="categories"
+            [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </nb-card-body>
+</nb-card>

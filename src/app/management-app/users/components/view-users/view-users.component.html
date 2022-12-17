@@ -1,0 +1,10 @@
+<nb-card>
+    <nb-card-header>
+        <span>Lista de usuarios</span>
+    </nb-card-header>
+    <nb-card-body>
+        <ag-grid-angular class="ag-theme-alpine" style="width: 100%; height: 100%;" [gridOptions]="gridOptions"
+            [columnDefs]="columnDefs" [rowData]="users" [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </nb-card-body>
+</nb-card>

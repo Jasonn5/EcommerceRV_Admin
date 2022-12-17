@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>{{textHeader}}</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="providerBillEditForm" (ngSubmit)="sendProviderBillData()">
+                    <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+                    <div class="form-group">
+                        <label><strong>Razon Social*</strong></label>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert text-danger">
+                            <div *ngIf="name.errors.required">
+                                La Razon Social es requerida.
+                            </div>
+                            <div *ngIf="name.errors.maxlength">
+                                La Razon Social debe tener máximo 100 caracteres.
+                            </div>
+                            <div *ngIf="name.errors.minlength">
+                                La Razon Social debe tener mínimo 3 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Nit*</strong></label>
+                        <input type="text" class="form-control" placeholder="Nit" formControlName="nit">
+                        <div *ngIf="nit.invalid && (nit.dirty || nit.touched)" class="alert text-danger">
+                            <div *ngIf="nit.errors.maxlength">
+                                El Nit debe tener máximo 20 caracteres.
+                            </div>
+                            <div *ngIf="nit.errors.required">
+                                El Nit es requerido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Codigo de Control*</strong></label>
+                                <input type="text" class="form-control" placeholder="Número de autorización"
+                                    formControlName="control-code">
+                                <div *ngIf="controlCode.invalid && (controlCode.dirty || controlCode.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="controlCode.errors.required">
+                                        El número de autorización es requerido.
+                                    </div>
+                                    <div *ngIf="controlCode.errors.pattern">
+                                        Solo se aceptan números.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label><strong>Fecha de factura*</strong></label>
+                                <input type="date" class="form-control" formControlName="bill-date" language="en">
+                                <div *ngIf="billDate.invalid && (billDate.dirty || billDate.touched)"
+                                    class="alert text-danger">
+                                    <div *ngIf="billDate.errors.required">
+                                        La fecha de factura es requerida.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Número de autorización*</strong></label>
+                        <input type="text" class="form-control" placeholder="Número de autorización"
+                            formControlName="authorization-number">
+                        <div *ngIf="authorizationNumber.invalid && (authorizationNumber.dirty || authorizationNumber.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="authorizationNumber.errors.required">
+                                El número de autorización es requerido.
+                            </div>
+                            <div *ngIf="authorizationNumber.errors.pattern">
+                                Solo se aceptan números.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Número de factura*</strong></label>
+                        <input type="text" class="form-control" placeholder="Número de factura"
+                            formControlName="bill-number">
+                        <div *ngIf="billNummber.invalid && (billNummber.dirty || billNummber.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="billNummber.errors.required">
+                                El número de factura es requerido.
+                            </div>
+                            <div *ngIf="billNummber.errors.pattern">
+                                Solo se aceptan números.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Monto Total*</strong></label>
+                        <input type="text" class="form-control" placeholder="Monto Total"
+                            formControlName="total-amount">
+                        <div *ngIf="totalAmount.invalid && (totalAmount.dirty || totalAmount.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="totalAmount.errors.required">
+                                El monto total es requerido.
+                            </div>
+                            <div *ngIf="totalAmount.errors.pattern">
+                                Solo se aceptan números.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Tipo de compra*</strong></label>
+                        <select class="form-control" formControlName="purchaseType">>
+                            <option [value]="1">Compras para mercado interno con destino a actividades gravadas</option>
+                            <option [value]="2">Compras para mercado interno con destino a actividades no gravadas
+                            </option>
+                            <option [value]="3">Compras sujetas a proporcionalidad</option>
+                            <option [value]="4">Compras para exportaciones</option>
+                            <option [value]="5">Compras tanto para el mercado interno como para exportaciones</option>
+                        </select>
+                        <div *ngIf="purchaseType.invalid && (purchaseType.dirty || purchaseType.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="purchaseType.errors.required">
+                                El tipo de compra es requerido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Número de DUI</strong></label>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="duiNumber">
+                        <div *ngIf="duiNumber.invalid && (duiNumber.dirty || duiNumber.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="duiNumber.errors.maxlength">
+                                El número de DUI debe tener máximo 100 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!providerBillEditForm.valid" class="btn btn-primary">
+                        {{textButtom}}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

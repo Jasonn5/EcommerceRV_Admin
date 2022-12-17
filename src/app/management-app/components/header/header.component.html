@@ -1,0 +1,17 @@
+<div class="header-container float-left">
+    <a (click)="toggleSidebar()" class="navigation">
+        <nb-icon icon="menu-outline"></nb-icon>
+    </a>
+    <a routerLink=""><img class="img"  alt="logo" /></a>
+</div>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle header-container float-right mt-3" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{username}}
+        <nb-icon icon="person-outline" class="ml-2"></nb-icon>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" (click)="changePassword()">Cambiar contraseña</button>
+        <button class="dropdown-item" (click)="logout()">Salir</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>{{textHeader}}</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="categoryEditorForm" (ngSubmit)="addCategory()">
+                    <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
+                    <div class="form-group">
+                        <label><strong>Nombre*</strong></label>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert text-danger">
+                            <div *ngIf="name.errors.required">
+                                El nombre de la categoría es requerido.
+                            </div>
+                            <div *ngIf="name.errors.maxlength">
+                                El nombre debe tener máximo 100 caracteres.
+                            </div>
+                            <div *ngIf="name.errors.minlength">
+                                El nombre debe tener al menos 3 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Descripción</strong></label>
+                        <textarea type="text" class="form-control" placeholder="Descripción"
+                            formControlName="description"></textarea>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                            class="alert text-danger">
+                            <div *ngIf="description.errors.maxlength">
+                                La descripción debe tener máximo 500 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!categoryEditorForm.valid" class="btn btn-primary">
+                        {{textButtom}}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

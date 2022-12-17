@@ -1,0 +1,4 @@
+<ag-grid-angular *ngIf="originStockList.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+    [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="originStockList"
+    (selectionChanged)="onSelectionChanged()">
+</ag-grid-angular>

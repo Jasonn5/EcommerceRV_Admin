@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-md-8">
+        <nb-card>
+            <nb-card-header>
+                <div class="row">
+                    <div class="col-md-4 mb-1">Detalle de Venta</div>
+                    <div class="col-md-4 mb-1">
+                    </div>
+                    <div class="col-md-4">
+                        <button
+                            [disabled]="saleDetails.length == 0 || (selectedClient.name != 'S/N' && selectedClient.id == 0) || (isCredit && (selectedClient.name == '' || selectedClient.name == 'S/N' || selectedClient.id == 0 || creditDays < 1))"
+                            type="button" class="btn btn-primary float-right" (click)="updateSale()">Actualizar
+                            venta</button>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Código de venta</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{sale.code}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Fecha de venta</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="saleDate" ngbDatepicker
+                                #d="ngbDatepicker" readonly="readonly" container="body">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <nb-icon icon="calendar-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Cliente</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="selectedClient.name" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="isAdmin">
+                        <label style="font-weight: bold;">Vendedor</label>
+                        <select [(ngModel)]="sellerId" class="form-control" (change)="selectSeller()">
+                            <option [value]=0>NINGUNO</option>
+                            <option *ngFor="let seller of sellers" [value]="seller.id">
+                                {{seller.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <app-sale-detail-table [reloadSaleDetail]="reloadSaleDetail.asObservable()"
+                        [saleDetails]="saleDetails" [totalCost]="totalCost" (saleDetailToEdit)="editSaleDetail($event)"
+                        (saleDetailToDelete)="removeSaleDetail($event)">
+                    </app-sale-detail-table>
+                </div>
+                <div class="row" *ngIf="isAdmin">
+                    <div class="col-md-2 radio">
+                        <label><input type="radio" name="optradio" checked [value]="false" [(ngModel)]="isCredit"
+                                (change)="paymentType(false)">
+                            Contado</label>
+                    </div>
+                    <div class="col-md-2 radio">
+                        <label><input type="radio" name="optradio" [value]="true" [(ngModel)]="isCredit"
+                                (change)="paymentType(true)"> Crédito</label>
+                    </div>
+                </div>
+                <div *ngIf="isCredit && selectedClient.id == 0" class="row">
+                    <div class="col">
+                        <label class="font-italic">Seleccione un cliente para poder vender a crédito.</label>
+                    </div>
+                </div>
+                <div *ngIf="isCredit && selectedClient.id != 0" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label><strong>Plazo del crédito (días)</strong></label>
+                            <input class="form-control mb-2" type="number" min="1" [(ngModel)]="creditDays">
+                            <span class="text-danger" *ngIf="creditDays < 1">El número de días es incorrecto, el mínimo
+                                es uno.</span>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-4">
+        <nb-card>
+            <nb-card-body>
+                <app-search-client (client)="selectClient($event)" [isFromSale]="isFromSale">
+                </app-search-client>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<nb-card>
+    <nb-card-header>
+        <span>Productos</span>
+    </nb-card-header>
+    <nb-card-body>
+        <input [hidden]="(stocks.length == 0 && searchProductsIsEmpty == true) || activeId != 1" type="text"
+            #searchProduct class="form-control col-md-3 my-3 ml-2" placeholder="Buscar producto">
+        <input [hidden]="(searchServicesIsEmpty == true && businessServices.length == 0) || !isAdmin || activeId != 2" type="text"
+            #searchService class="form-control col-md-3 my-3 ml-2" placeholder="Buscar servicio">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" (tabChange)="changeTab($event.nextId)" [destroyOnHide]="false"
+            class="nav-tabs mb-3">
+            <li [ngbNavItem]=" 1">
+                <a ngbNavLink>Productos</a>
+                <ng-template ngbNavContent>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == false"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>La búsqueda no generó resultados.</strong>
+                    </div>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == true"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>No existe de productos en esta ubicación.</strong>
+                    </div>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == true"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>No existe stock de productos.</strong>
+                    </div>
+                    <div>
+                        <app-stock-table *ngIf="stocks.length != 0" [stocks]="stocks"
+                            (selectedStock)="addProductToSaleDetail($event)"
+                            [reloadProducts]="reloadProducts.asObservable()">
+                        </app-stock-table>
+                    </div>
+                </ng-template>
+            </li>
+            <li *ngIf="isAdmin" [ngbNavItem]="2">
+                <a ngbNavLink>Servicios</a>
+                <ng-template ngbNavContent>
+                    <div *ngIf="businessServices.length == 0 && searchServicesIsEmpty == false"
+                        class="alert alert-primary text-center m-3" role="alert">
+                        <strong>La búsqueda no generó resultados.</strong>
+                    </div>
+                    <div *ngIf="businessServices.length == 0 && searchServicesIsEmpty == true"
+                        class="alert alert-primary text-center m-3" role="alert">
+                        <strong>No existen servicios registrados.</strong>
+                    </div>
+                    <div>
+                        <app-business-service-table *ngIf="businessServices.length != 0"
+                            [businessServices]="businessServices"
+                            (selectedService)="addBusinessServiceToSaleDetail($event)">
+                        </app-business-service-table>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </nb-card-body>
+</nb-card>

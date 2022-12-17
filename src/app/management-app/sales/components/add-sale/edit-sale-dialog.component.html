@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar datos de venta</h4>
+</div>
+<div class="modal-body">
+    <div class="row mb-3">
+        <div class="col-6">
+            <label><strong>Cantidad</strong></label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="data.saleDetailQuantity">
+            <span class="text-danger" *ngIf="displayError">La cantidad debe ser menor al stock.</span>
+        </div>
+        <div class="col-6 ">
+            <label><strong>Precio Unitario</strong></label>
+            <input type="number" class="form-control" [(ngModel)]="data.saleDetailUnitaryPrice">
+        </div>
+    </div>
+    <div *ngIf="data.stockId != 0" class="row mb-3">
+        <div class="col-6">
+            <label><strong>Lista de precios</strong></label>
+            <select #mySelect class="form-control" (change)="selectPrice(mySelect.value)">
+                <option *ngFor="let price of data.priceList" [value]="price">
+                    {{price}}
+                </option>
+            </select>
+        </div>
+        <div class="col-6 ">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onYesClick()">Aceptar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancelar</button>
+</div>

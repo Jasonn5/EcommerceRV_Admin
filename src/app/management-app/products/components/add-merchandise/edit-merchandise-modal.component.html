@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar datos del detalle de mercaderia</h4>
+</div>
+<div class="modal-body">
+    <div class="row mb-3">
+        <div class="col-6">
+            <label class="mb-2">Cantidad</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="data.merchandiseDetailQuantity">
+        </div>
+        <div class="col-6 ">
+            <label class="mb-2">Precio de compra (Bs.)</label>
+            <input type="number" class="form-control" [(ngModel)]="data.merchandiseDetailPrice">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onYesClick()">Aceptar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancelar</button>
+</div>

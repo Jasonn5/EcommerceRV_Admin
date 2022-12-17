@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Entradas</h4>
+</div>
+<div class="modal-body">
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <label style="font-weight: bold;">Fecha inicio:</label>
+            <div class="card">
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="startDate" ngbDatepicker
+                        #d1="ngbDatepicker" readonly="readonly" container="body" (ngModelChange)="getEntries()">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d1.toggle()" type="button">
+                            <nb-icon icon="calendar-outline"></nb-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label style="font-weight: bold;">Fecha fin:</label>
+            <div class="card">
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="endDate" ngbDatepicker
+                        #d2="ngbDatepicker" readonly="readonly" container="body" (ngModelChange)="getEntries()">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button" disabled>
+                            <nb-icon icon="calendar-outline"></nb-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="cashRegisterEntries.length == 0" class="alert alert-primary text-center mb-0" role="alert">
+        No existen entradas registradas.
+    </div>
+    <ag-grid-angular *ngIf="cashRegisterEntries.length != 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+        [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="cashRegisterEntries"
+        [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cerrar</button>
+</div>

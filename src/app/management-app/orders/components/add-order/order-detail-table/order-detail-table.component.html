@@ -1,0 +1,9 @@
+<div>
+    <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [gridOptions]="gridOptions"
+        [columnDefs]="columnDefs" [rowData]="orderDetails" [frameworkComponents]="frameworkComponents"
+        [overlayNoRowsTemplate]="noRowsTemplate">
+    </ag-grid-angular>
+</div>
+<div class="align">
+    <span class="badge badge-pill badge-primary mt-2">Monto total: {{totalCost}} Bs.</span>
+</div>

@@ -1,0 +1,41 @@
+@import "themes";
+
+@import "~@nebular/theme/styles/globals";
+
+@include nb-install() {
+  @include nb-theme-global();
+}
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+nb-card-header {
+  border-bottom: 1px solid #edf1f7 !important;
+  font-size: 24px !important;
+}
+
+.alert {
+  margin-bottom: 0;
+}
+
+.form-control.ng-touched.ng-invalid {
+  border: 2px solid #d9534f;
+}
+
+.my-custom-class .tooltip-inner {
+  background-color: #0275d8;
+}
+.my-custom-class .arrow::before {
+  border-top-color: #0275d8;
+}

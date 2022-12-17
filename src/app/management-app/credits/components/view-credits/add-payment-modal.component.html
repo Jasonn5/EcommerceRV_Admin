@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agregar pago</h4>
+</div>
+<div class="modal-body">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="mb-2">Fecha del pago</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="paymentDate" ngbDatepicker
+                    #d="ngbDatepicker" readonly="readonly">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <nb-icon icon="calendar-outline"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="mb-2">Referencia</label>
+            <input type="text" class="form-control" [(ngModel)]="data.reference">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="mb-2">Monto a pagar</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="data.paymentAmount">
+            <span class="text-danger" *ngIf="displayError">El monto del pago no puede ser mayor al monto total.</span>
+        </div>
+        <div class="col-md-6 ">
+            <label class="mb-2">Monto pendiente</label>
+            <input type="number" class="form-control" [(ngModel)]="data.totalAmount" [readonly]="true">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addPartialPayment()">Aceptar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="payAll()">Pagar todo</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancelar</button>
+</div>

@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-8">
+        <nb-card>
+            <nb-card-header>
+                <span>Detalle del Pedido</span>
+                <button [disabled]="
+              orderDetails.length == 0 || selectedClient.id == 0 || sellerId == 0" type="button"
+                    class="btn btn-primary float-right" (click)="updateOrder()">
+                    Actualizar pedido
+                </button>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Código</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{orderCode}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Fecha</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{orderDate}}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold">Cliente*</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{selectedClient.name }}" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: bold">Vendedor*</label>
+                        <select [(ngModel)]="sellerId" class="form-control" (change)="selectSeller()">
+                            <option [value]="0">NINGUNO</option>
+                            <option *ngFor="let seller of sellers" [value]="seller.id">
+                                {{ seller.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <app-order-detail-table [reloadOrderDetail]="reloadOrderDetail.asObservable()"
+                    [orderDetails]="orderDetails" [totalCost]="totalCost" (orderDetailToEdit)="editOrderDetail($event)"
+                    (orderDetailToDelete)="removeOrderDetail($event)">
+                </app-order-detail-table>
+                <div class="row">
+                    <div class="col-md-3 radio">
+                        <label><input type="radio" name="delivered-radio" checked [value]="true"
+                                [(ngModel)]="isDelivered"> Entregado</label>
+                    </div>
+                    <div class="col-md-3 radio">
+                        <label><input type="radio" name="delivered-radio" [value]="false" [(ngModel)]="isDelivered"> No
+                            entregado</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 radio">
+                        <label><input type="radio" name="optradio" checked [value]="true" [(ngModel)]="isSaleInCash"
+                                (change)="paymentType(true)"> Contado</label>
+                    </div>
+                    <div class="col-md-3 radio">
+                        <label><input type="radio" name="optradio" [value]="false" [(ngModel)]="isSaleInCash"
+                                (change)="paymentType(false)">
+                            Crédito</label>
+                    </div>
+                </div>
+                <div *ngIf="!isSaleInCash && selectedClient.id == 0" class="row">
+                    <div class="col">
+                        <label class="font-italic">Seleccione un cliente para poder vender a crédito.</label>
+                    </div>
+                </div>
+                <div *ngIf="!isSaleInCash && selectedClient.id != 0" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label><strong>Plazo del crédito (días)</strong></label>
+                            <input class="form-control mb-2" type="number" min="1" [(ngModel)]="creditDays">
+                            <span class="text-danger" *ngIf="creditDays < 1">El número de días es incorrecto, el mínimo
+                                es uno.</span>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-4">
+        <nb-card>
+            <nb-card-header>
+                <span>Clientes</span>
+            </nb-card-header>
+            <nb-card-body>
+                <div>
+                    <app-search-client (client)="addClientToOrder($event)" [isFromSale]="isFromSale">
+                    </app-search-client>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <span>Stocks</span>
+            </nb-card-header>
+            <nb-card-body>
+                <input [hidden]="stocks.length == 0 && searchStockIsEmpty == true" type="text" #searchStock
+                    class="form-control col-md-6 mb-3" placeholder="Buscar producto" />
+                <div *ngIf="stocks.length == 0 && searchStockIsEmpty == false"
+                    class="alert alert-primary text-center mb-0" role="alert">
+                    <strong>La búsqueda no generó resultados.</strong>
+                </div>
+                <div *ngIf="stocks.length == 0 && searchStockIsEmpty == true"
+                    class="alert alert-primary text-center mb-0" role="alert">
+                    <strong>No existen productos.</strong>
+                </div>
+                <div>
+                    <app-stock-to-order-table *ngIf="stocks.length != 0" [stocks]="stocks"
+                        (selectedStock)="addProductToOrderDetail($event)"
+                        [reloadProducts]="reloadProducts.asObservable()">
+                    </app-stock-to-order-table>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

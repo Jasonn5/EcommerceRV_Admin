@@ -1,0 +1,55 @@
+<nb-layout>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-body>
+                    <img class="img mt-5" src="{{logoUrl}}" alt="">
+                <div class="auth-block mt-3">
+                    <div class="text-center mb-5">
+                        <h1 id="title" class="title">Login</h1>
+                        <p class="sub-title">Hola! Ingresa con tu nombre de usuario y contraseña.</p>
+                    </div>
+                    <div *ngIf="errorMessage" class="alert alert-primary" role="alert">
+                        {{errorMessage}}
+                    </div>
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="form-group mb-4">
+                            <label class="label"><strong>Usuario</strong></label>
+                            <input type="text" #userFocus class="form-control" placeholder="Usuario"
+                                formControlName="username" autofocus>
+                            <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                class="alert text-danger">
+                                <div *ngIf="username.errors.required">
+                                    El nombre del usuario es requerido.
+                                </div>
+                                <div *ngIf="username.errors.maxlength">
+                                    El nombre debe tener máximo 100 caracteres.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label class="label"><strong>Contraseña</strong></label>
+                            <input type="password" class="form-control" placeholder="Contraseña"
+                                formControlName="password">
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                                class="alert text-danger">
+                                <div *ngIf="password.errors.required">
+                                    La contraseña es requerida.
+                                </div>
+                                <div *ngIf="password.errors.maxlength">
+                                    La contraseña debe tener máximo 100 caracteres.
+                                </div>
+                            </div>
+                        </div>
+                        <button nbButton fullWidth status="success" [disabled]="!loginForm.valid">
+                            Ingresar
+                        </button>
+                    </form>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+</nb-layout>
+<ngx-spinner bdColor="rgba(2,117,216,0.4)" size="large" color="#0275d8" type="ball-clip-rotate-pulse"
+    [fullScreen]="true">
+    <p style="color: #0275d8; font-size: 20px; font-weight: bold;"> Cargando... </p>
+</ngx-spinner>

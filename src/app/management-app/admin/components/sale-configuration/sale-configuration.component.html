@@ -1,0 +1,87 @@
+<nb-card class="col-md-5">
+    <nb-card-header>
+        <h5>Configuración de Ventas</h5>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Mostrar imagenes</label>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                    [(ngModel)]="saleConfiguration.isTableView">
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" [value]="false">SI
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" [value]="true"> NO
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!saleConfiguration.isTableView" class="row mt-4">
+            <div class="col-md-6">
+                <label>Listar por categoria</label>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                    [(ngModel)]="saleConfiguration.listByCategory">
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" [value]="true">SI
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" [value]="false"> NO
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <label>Seleccionar Ubicacion</label>
+            </div>
+            <div class="col-md-6">
+                <select [(ngModel)]="locationId" class="form-control">
+                    <option [value]=0>NINGUNA</option>
+                    <option *ngFor="let location of locations" [value]="location.id">{{location.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4" *ngIf="isBilling">
+            <div class="col-md-6">
+                <label>Seleccionar Facturación</label>
+            </div>
+            <div class="col-md-6">
+                <select [(ngModel)]="billConfigurationId" class="form-control">
+                    <option [value]=0>NINGUNA</option>
+                    <option *ngFor="let billConfiguration of billConfigurations" [value]="billConfiguration.id">
+                        {{billConfiguration.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <label>Seleccionar Tamaño de Hoja</label>
+            </div>
+            <div class="col-md-6">
+                <select [(ngModel)]="saleConfiguration.sheetSizeId" class="form-control">
+                    <option [value]=0>CARTA</option>
+                    <option [value]=1>PEQUEÑA</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <label>Seleccionar Cuenta</label>
+            </div>
+            <div class="col-md-6">
+                <select required [(ngModel)]="cashRegisterId" class="form-control">
+                    <option [value]=0>NINGUNA</option>
+                    <option *ngFor="let cashRegister of cashRegisters" [value]="cashRegister.id">
+                        {{cashRegister.code}}</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary float-right mt-4" (click)="saveChanges()">Guardar</button>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Notificaciones</h4>
+    <nb-icon icon="close-outline" class="action-button float-right" (click)="close()">
+    </nb-icon>
+</div>
+<div class="modal-body">
+    <div *ngFor="let notification of data.notifications">
+        <div *ngIf="!notification.status" class="alert alert-danger" role="alert">
+            {{notification.description}}
+        </div>
+        <div *ngIf="notification.status" class="alert alert-success" role="alert">
+            {{notification.description}}
+        </div>
+    </div>
+</div>

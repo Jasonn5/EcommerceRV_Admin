@@ -1,0 +1,36 @@
+<nb-card *ngIf="listCashRegisters.length == 0">
+    <nb-card-body>
+        <div class="alert alert-primary text-center mb-0" role="alert">
+            <strong>En este momento no existen cuentas. Agrega una <a class="action-Link"
+                    routerLink="/cash-registers/add-cash-register">aquí</a>.</strong>
+        </div>
+    </nb-card-body>
+</nb-card>
+<div class="row" *ngIf="listCashRegisters.length != 0">
+    <div *ngFor="let cashRegister of listCashRegisters" class="col-lg-3">
+        <nb-card>
+            <nb-card-header>{{cashRegister.code}}
+                <nb-icon icon="trash-2-outline" class="action-button float-right" ngbTooltip="Eliminar"
+                    tooltipClass="my-custom-class" placement="bottom" (click)="deleteCashRegister(cashRegister)">
+                </nb-icon>
+                <nb-icon icon="edit-2-outline" class="action-button float-right" ngbTooltip="Editar"
+                    tooltipClass="my-custom-class" placement="bottom"
+                    [routerLink]="['/cash-registers/edit-cash-register', cashRegister.id]"></nb-icon>
+            </nb-card-header>
+            <nb-card-body>
+                <div>
+                    <label><strong>Tipo:&nbsp;</strong></label>
+                    <span>{{cashRegister.cashRegisterType | type}}</span>
+                </div>
+                <label><strong>Monto:&nbsp;</strong></label>
+                <span>{{cashRegister.amount | number : '1.2-2'}}</span>
+            </nb-card-body>
+            <nb-card-footer class="text-center">
+                <button type="button" class="btn btn-primary btn-sm mb-2" (click)="addEntryDialog(cashRegister)">Agregar
+                    entrada</button>
+                <button type="button" class="btn btn-secondary btn-sm ml-1 mb-2"
+                    (click)="viewEntriesDialog(cashRegister.id)">Ver entradas</button>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+</div>

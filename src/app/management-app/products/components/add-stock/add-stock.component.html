@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>Lista de productos</nb-card-header>
+            <nb-card-body>
+                <div>
+                    <app-products-to-transfer-table (product)="selectProduct($event)"></app-products-to-transfer-table>
+                </div>
+                <div *ngIf="locations.length != 0" class="row mt-3">
+                    <div class="col-md-4">
+                        <label><strong>Cantidad: </strong></label>
+                        <input type="number" class="form-control" [(ngModel)]="quantity" min="1">
+                    </div>
+                    <div class="col-md-8 align-self-end">
+                        <button [disabled]="!selectedProduct.id || quantity <= 0" class="btn btn-primary mr-1"
+                            (click)="addOrSubtractStock()">Agregar</button>
+                        <button [disabled]="canSubtract == false || !selectedProduct.id || quantity <= 0"
+                            class="btn btn-secondary" (click)="addOrSubtractStock(true)">Quitar</button>
+                    </div>
+                </div>
+                <div *ngIf="locations.length != 0 && selectedProduct.name != ''" class="row mt-3">
+                    <div class="col-md">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1"
+                                [(ngModel)]="modifyPrice">
+                            <label class="form-check-label" for="exampleCheck1">Registrar precio de entrada (solo para
+                                registro de movimiento de almacén)</label>
+                        </div>
+                        <input *ngIf="modifyPrice" type="number" class="form-control col-md-4"
+                            [(ngModel)]="productPrice" min="0">
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>Stock</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div *ngIf="locations.length != 0" class="col-md-6">
+                        <select [(ngModel)]="locationId" class="form-control mb-3" (change)="selectLocation()">
+                            <option *ngFor="let location of locations" [value]="location.id">
+                                {{location.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input [hidden]="stocks.length == 0 && searchIsEmpty == true" type="text" #searchRef
+                            class="form-control mb-3" placeholder="Buscar producto">
+                    </div>
+                </div>
+                <div *ngIf="locations.length == 0" class="alert alert-primary text-center" role="alert">
+                    <strong>En este momento no existen ubicaciones. Agrega una <a class="action-Link"
+                            routerLink="/admin/add-location">aquí</a>.</strong>
+                </div>
+                <div *ngIf="stocks.length == 0 && locations.length != 0 && searchIsEmpty == true"
+                    class="alert alert-primary text-center" role="alert">
+                    <strong>No hay stock de productos para esta ubicación.</strong>
+                </div>
+                <div *ngIf="stocks.length == 0 && searchIsEmpty == false" class="alert alert-primary text-center mb-0"
+                    role="alert">
+                    <strong>La búsqueda no generó resultados.</strong>
+                </div>
+                <div>
+                    <app-stock-products-table [stocks]="stocks"></app-stock-products-table>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

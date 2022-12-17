@@ -1,0 +1,52 @@
+<nb-card>
+    <nb-card-header>Proforma</nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-3">
+          <input [(ngModel)]="client.name" class="form-control" type="text"
+            placeholder="Ingresar nombre del cliente">
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+          <button [disabled]="orderDetails.length == 0 || client.name == ''"
+            class="btn btn-primary float-right" (click)="generatePreOrder()">Exportar a PDF</button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <div class="row">
+    <div class="col-md-6">
+      <nb-card>
+        <nb-card-header>
+          <span>Productos</span>
+        </nb-card-header>
+        <nb-card-body>
+          <input [hidden]="stocks.length == 0 && searchStockIsEmpty == true" type="text" #searchStock
+            class="form-control col-md-6 mb-3" placeholder="Buscar producto">
+          <div *ngIf="stocks.length == 0 && searchStockIsEmpty == false" class="alert alert-primary text-center mb-0"
+            role="alert">
+            <strong>La búsqueda no generó resultados.</strong>
+          </div>
+          <div *ngIf="stocks.length == 0 && searchStockIsEmpty == true" class="alert alert-primary text-center mb-0"
+            role="alert">
+            <strong>No existen productos registrados.</strong>
+          </div>
+          <app-stock-to-order-table *ngIf="stocks.length != 0" [stocks]="stocks"
+            (selectedStock)="addProductToPreOrder($event)"></app-stock-to-order-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-6">
+      <nb-card>
+        <nb-card-header>
+          <span>Detalle del Pedido</span>
+        </nb-card-header>
+        <nb-card-body>
+          <app-order-detail-table [reloadOrderDetail]="reloadOrderDetail.asObservable()" [orderDetails]="orderDetails"
+            [totalCost]="totalCost" (orderDetailToEdit)="editOrderDetail($event)"
+            (orderDetailToDelete)="removeOrderDetail($event)"></app-order-detail-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

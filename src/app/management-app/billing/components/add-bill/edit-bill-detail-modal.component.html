@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar datos del producto</h4>
+</div>
+<div class="modal-body">
+    <label class="mb-2">Nombre</label>
+    <input type="text" class="form-control mb-2" [(ngModel)]="data.productName">
+    <div class="row mb-3">
+        <div class="col-6">
+            <label class="mb-2">Cantidad</label>
+            <input type="number" class="form-control mb-2" [(ngModel)]="data.quantity">
+        </div>
+        <div class="col-6 ">
+            <label class="mb-2">Precio unitario</label>
+            <input type="number" class="form-control" [(ngModel)]="data.unitaryPrice">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onYesClick()">Aceptar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancelar</button>
+</div>

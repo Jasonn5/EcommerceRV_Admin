@@ -1,0 +1,95 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group list-group-horizontal-md">
+                    <li class="list-group-item list-group-item-primary">DOSIFICACIÓN:</li>
+                    <li class="list-group-item">{{billConfigurationName}}</li>
+                </ul>
+            </div>
+            <div *ngIf="showWarning" class="col-md-6">
+                <div class="alert alert-warning" role="alert">
+                    La fecha límite de emision de la dosificación actual es: {{emissionLimitDate | date:'dd/MM/yyyy'}}
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-6 mb-1">Facturas emitidas</div>
+            <div class="col-md-2 mb-1">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <app-view-bills-by-sale [reloadBills]="reloadBills.asObservable()" [bills]="bills"
+                (reloadData)="getBillsBySale()">
+            </app-view-bills-by-sale>
+        </div>
+    </nb-card-body>
+</nb-card>
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-6 mb-1">Detalle de ingreso de factura</div>
+            <div class="col-md-2 mb-1">
+            </div>
+            <div class="col-md-4">
+                <button type="button" [disabled]="billDetails.length == 0 || taxPaidName == '' || nit == ''"
+                    class="btn btn-primary float-right" (click)="addBill()">Generar factura</button>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label style="font-weight: bold;">Fecha de factura</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="billDate" ngbDatepicker
+                        #d="ngbDatepicker" readonly="readonly" container="body">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <nb-icon icon="calendar-outline"></nb-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label style="font-weight: bold;">Cliente</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="taxPaidName" #clientName="ngModel" required>
+                </div>
+                <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)"
+                    class="alert alert-danger mt-2">
+                    <div *ngIf="clientName.errors.required">
+                        El campo es requerido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label style="font-weight: bold;">NIT</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="nit" #clientNit="ngModel" required>
+                </div>
+                <div *ngIf="clientNit.invalid && (clientNit.dirty || clientNit.touched)"
+                    class="alert alert-danger mt-2">
+                    <div *ngIf="clientNit.errors.required">
+                        El campo es requerido.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <app-bill-details-table [reloadbillDetails]="reloadbillDetails.asObservable()" [billDetails]="billDetails"
+                (billDetailToEdit)="editBillDetail($event)" (billDetailToDelete)="removeBillDetail($event)">
+            </app-bill-details-table>
+        </div>
+    </nb-card-body>
+</nb-card>

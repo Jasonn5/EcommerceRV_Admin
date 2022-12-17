@@ -1,0 +1,21 @@
+build:
+
+ stage: build
+
+ image: trion/ng-cli
+
+ before_script:
+
+  - npm install
+
+ script:
+
+  - ng build --prod --aot
+
+ artifacts:
+
+  expire_in: 1 day
+
+  paths:
+
+   - dist/

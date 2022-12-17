@@ -1,0 +1,53 @@
+<nb-card>
+    <nb-card-header>
+        <span>Lista de Facturas Proveedores</span>
+        <button type="button" class="btn btn-primary float-right"
+            routerLink="/providers/add-provider-bill">Agregar</button>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row pb-3">
+            <div class="col-md-3">
+                <label style="font-weight: bold;">Fecha inicio:</label>
+                <div class="card">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="start" ngbDatepicker
+                            #d1="ngbDatepicker" readonly="readonly" container="body"
+                            (ngModelChange)="listProvidersBillByDate()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="d1.toggle()" type="button"
+                                (ngModelChange)="listProvidersBillByDate()">
+                                <nb-icon icon="calendar-outline"></nb-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label style="font-weight: bold;">Fecha fin:</label>
+                <div class="card">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="end" ngbDatepicker
+                            #d2="ngbDatepicker" readonly="readonly" container="body"
+                            (ngModelChange)="listProvidersBillByDate()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"
+                                (ngModelChange)="listProvidersBillByDate()">
+                                <nb-icon icon="calendar-outline"></nb-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="providersBill.length == 0 && !messageError" class="alert alert-primary text-center" role="alert">
+            <strong>No existen facturas registradas.</strong>
+        </div>
+        <div *ngIf="messageError" class="alert alert-primary text-center mt-2" role="alert">
+            <strong>{{messageError}}</strong>
+        </div>
+        <ag-grid-angular *ngIf="providersBill.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+            [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="providersBill"
+            [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </nb-card-body>
+</nb-card>

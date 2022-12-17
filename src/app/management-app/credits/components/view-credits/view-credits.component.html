@@ -1,0 +1,39 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group list-group-horizontal-md">
+                    <li class="list-group-item list-group-item-primary">ABONAR PAGOS EN CUENTA:</li>
+                    <li class="list-group-item">{{cashRegisterName}}</li>
+                </ul>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+<nb-card>
+    <nb-card-header>
+        <span class="title">Lista de créditos</span>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-4">
+                <input [hidden]="credits.length == 0 && searchIsEmpty == true" type="text" #searchRef
+                    class="form-control mb-3" placeholder="Buscar crédito">
+            </div>
+            <div class="col-md-4">
+                <select [(ngModel)]="creditStatus" class="form-control float-right" (change)="getCreditsByStatus()">
+                    <option [value]="2">Todos</option>
+                    <option [value]="0">Pendientes</option>
+                    <option [value]="1">Completados</option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="credits.length == 0" class="alert alert-primary text-center mt-3" role="alert">
+            <strong>No existen créditos registrados.</strong>
+        </div>
+        <ag-grid-angular *ngIf="credits.length > 0" style="width: 100%; height: 100%;" class="ag-theme-alpine"
+            [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="credits"
+            [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </nb-card-body>
+</nb-card>

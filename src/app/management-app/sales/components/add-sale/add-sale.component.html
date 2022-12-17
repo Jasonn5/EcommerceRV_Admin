@@ -1,0 +1,250 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="list-group list-group-horizontal-md">
+                    <li class="list-group-item list-group-item-primary">CUENTA:</li>
+                    <li class="list-group-item">{{cashRegisterName}}</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul class="list-group list-group-horizontal-md">
+                    <li class="list-group-item list-group-item-primary">UBICACIÓN:</li>
+                    <li class="list-group-item">{{locationName}}</li>
+                </ul>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+<div class="row">
+    <div class="col-md-8">
+        <nb-card>
+            <nb-card-header>
+                <div class="row">
+                    <div class="col-md-4 mb-1">Detalle de Venta</div>
+                    <div class="col-md-4 mb-1">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button"
+                            [disabled]="saleDetails.length == 0 || (client.name != 'S/N' && client.id == 0) || (isCredit && (client.name == '' || client.name == 'S/N' || client.id == 0 || creditDays < 1))"
+                            class="btn btn-primary float-right" (click)="addSale()">Registrar venta</button>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Código de venta</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{saleCode.code}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Fecha de venta</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy" [(ngModel)]="saleDate" ngbDatepicker
+                                #d="ngbDatepicker" readonly="readonly" container="body" (ngModelChange)="getSaleCode()">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <nb-icon icon="calendar-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label style="font-weight: bold;">Cliente</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{client.name}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="isAdmin">
+                        <label style="font-weight: bold;">Vendedor</label>
+                        <select [(ngModel)]="sellerId" class="form-control" (change)="selectSeller()">
+                            <option [value]=0>NINGUNO</option>
+                            <option *ngFor="let seller of sellers" [value]="seller.id">
+                                {{seller.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <app-sale-detail-table [reloadSaleDetail]="reloadSaleDetail.asObservable()"
+                        [saleDetails]="saleDetails" [totalCost]="totalCost" (saleDetailToEdit)="editSaleDetail($event)"
+                        (saleDetailToDelete)="removeSaleDetail($event)">
+                    </app-sale-detail-table>
+                </div>
+                <div class="row" *ngIf="isAdmin">
+                    <div class="col-md-2 radio">
+                        <label><input type="radio" name="optradio" checked [value]="false" [(ngModel)]="isCredit"
+                                (change)="paymentType(false)">
+                            Contado</label>
+                    </div>
+                    <div class="col-md-2 radio">
+                        <label><input type="radio" name="optradio" [value]="true" [(ngModel)]="isCredit"
+                                (change)="paymentType(true)"> Crédito</label>
+                    </div>
+                </div>
+                <div *ngIf="isCredit && client.id == 0" class="row">
+                    <div class="col">
+                        <label class="font-italic">Seleccione un cliente para poder vender a crédito.</label>
+                    </div>
+                </div>
+                <div *ngIf="isCredit && client.id != 0" class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label><strong>Plazo del crédito (días)</strong></label>
+                            <input class="form-control mb-2" type="number" min="1" [(ngModel)]="creditDays">
+                            <span class="text-danger" *ngIf="creditDays < 1">El número de días es incorrecto, el mínimo
+                                es uno.</span>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-4">
+        <nb-card>
+            <nb-card-body>
+                <ul class="nav nav-tabs mb-3">
+                    <li><a class="nav-link active" data-toggle="tab" href="#menu1" (click)="optionsToGetClient(1)">Sin
+                            cliente</a>
+                    </li>
+                    <li><a class="nav-link" data-toggle="tab" href="#menu2" (click)="optionsToGetClient(2)">Buscar</a>
+                    </li>
+                    <li><a class="nav-link" data-toggle="tab" href="#menu3"
+                            (click)="optionsToGetClient(3)">Registrar</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="menu1" class="tab-pane fade show active">
+                        <label><strong>NIT</strong></label>
+                        <input type="text" class="form-control mb-3" [(ngModel)]="client.nit" readonly>
+                        <label><strong>Nombre</strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="client.name" readonly>
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                        <app-search-client (client)="selectClient($event)" [isFromSale]="isFromSale">
+                        </app-search-client>
+                    </div>
+                    <div id="menu3" class="tab-pane fade">
+                        <label><strong>NIT</strong></label>
+                        <input type="text" class="form-control mb-3" [(ngModel)]="client.nit">
+                        <label><strong>Nombre*</strong></label>
+                        <input type="text" class="form-control mb-3" [(ngModel)]="client.name">
+                        <label><strong>Razón Social</strong></label>
+                        <input type="text" class="form-control" [(ngModel)]="client.businessName">
+                        <button [disabled]="client.name == '' || registerClient" type="button"
+                            class="btn btn-primary float-right mt-2" (click)="addClient()">Registrar
+                            cliente</button>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+<nb-card>
+    <nb-card-body>
+        <input [hidden]="(stocks.length == 0 && searchProductsIsEmpty == true) || activeId != 1" type="text"
+            #searchProduct class="form-control col-md-3 my-3 ml-2" placeholder="Buscar producto">
+        <input [hidden]="(searchServicesIsEmpty == true && businessServices.length == 0) || activeId != 2 || !isAdmin"
+            type="text" #searchService class="form-control col-md-3 my-3 ml-2" placeholder="Buscar servicio">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" [destroyOnHide]="false" class="nav-tabs mb-3">
+            <li [ngbNavItem]=" 1">
+                <a ngbNavLink>Productos</a>
+                <ng-template ngbNavContent>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == false"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>La búsqueda no generó resultados.</strong>
+                    </div>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == true && locationId != 0"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>No existe de productos en esta ubicación.</strong>
+                    </div>
+                    <div *ngIf="stocks.length == 0 && searchProductsIsEmpty == true && locationId == 0"
+                        class="alert alert-primary text-center mb-0" role="alert">
+                        <strong>No existe stock de productos.</strong>
+                    </div>
+                    <div
+                        *ngIf="!saleConfiguration.isTableView && saleConfiguration.listByCategory && stocks.length != 0">
+                        <div *ngFor="let category of productsGroupedByCategory" class="py-3">
+                            <h2 *ngIf="category.name != 'undefined'" class="mb-2 mt-3">
+                                <strong>{{category.name}}</strong>
+                            </h2>
+                            <h2 *ngIf="category.name == 'undefined'" class="mb-2 mt-3"><strong>Otros</strong></h2>
+                            <div class="row">
+                                <div *ngFor="let stock of category.value" class="col-md-3 my-3 ml-2">
+                                    <div class="card card-style mb-2" (click)="addProductToSaleDetail(stock)">
+                                        <img class="card-img-top"
+                                            [src]="stock.product.imageUrl ? stock.product.imageUrl : '/assets/images/not-found.png'"
+                                            onerror="this.src='/assets/images/not-found.png'" alt="Not Found!">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{stock.product.name}}</h5>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" style="border: none;"
+                                                *ngIf="stock.product.code != ''">
+                                                Còdigo: {{stock.product.code}}<br>
+                                                Ubicación: {{stock.location.name}}<br>
+                                                Precio: {{stock.product.price | number : '1.2-2'}}
+                                                Bs<br>
+                                                Cantidad: {{stock.quantity}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="!saleConfiguration.isTableView && stocks.length != 0 && !saleConfiguration.listByCategory">
+                        <div class="row">
+                            <div *ngFor="let stock of stocks" class="col-md-3">
+                                <div class="card card-style mb-3" (click)="addProductToSaleDetail(stock)">
+                                    <img class="card-img-top"
+                                        [src]="stock.product.imageUrl ? stock.product.imageUrl : '/assets/images/not-found.png'"
+                                        onerror="this.src='/assets/images/not-found.png'" alt="Not Found!">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{stock.product.name}}</h5>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" *ngIf="stock.product.code != ''">
+                                            Còdigo: {{stock.product.code}}<br>
+                                            Ubicación: {{stock.location.name}}<br>
+                                            Precio: {{stock.product.price | number : '1.2-2'}} Bs<br>
+                                            Cantidad: {{stock.quantity}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <app-stock-table *ngIf="saleConfiguration.isTableView && stocks.length != 0" [stocks]="stocks"
+                            (selectedStock)="addProductToSaleDetail($event)"
+                            [reloadProducts]="reloadProducts.asObservable()">
+                        </app-stock-table>
+                    </div>
+                </ng-template>
+            </li>
+            <li *ngIf="isAdmin" [ngbNavItem]="2">
+                <a ngbNavLink>Servicios</a>
+                <ng-template ngbNavContent>
+                    <div *ngIf="businessServices.length == 0 && searchServicesIsEmpty == false"
+                        class="alert alert-primary text-center m-3" role="alert">
+                        <strong>La búsqueda no generó resultados.</strong>
+                    </div>
+                    <div *ngIf="businessServices.length == 0 && searchServicesIsEmpty == true"
+                        class="alert alert-primary text-center m-3" role="alert">
+                        <strong>No existen servicios registrados.</strong>
+                    </div>
+                    <div>
+                        <app-business-service-table *ngIf="businessServices.length != 0"
+                            [businessServices]="businessServices"
+                            (selectedService)="addBusinessServiceToSaleDetail($event)">
+                        </app-business-service-table>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </nb-card-body>
+</nb-card>

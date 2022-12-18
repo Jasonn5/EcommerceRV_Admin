@@ -12,20 +12,13 @@ export class ReportService {
 
   getPdf(
     startDate: Date,
-    endDate: Date,
-    reportId: number,
-    productId: number = 0,
-    locationId: number = 0,
-    clientId: number = 0,
-    merchandiseRegisterId: number = 0,
-    sellerId: number = 0,
-    cashRegisterId: number = 0
+    endDate: Date
   ) {
-    var url = environment.BACK_END_HOST + 'report/print';
+    var url = environment.BACK_END_HOST + 'print/report';
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
 
-    return this._http.post(url, { startDate, endDate, reportId, productId, locationId, clientId, merchandiseRegisterId, sellerId, cashRegisterId }, { headers: headers, responseType: 'blob' });
+    return this._http.post(url, { startDate, endDate}, { headers: headers, responseType: 'blob' });
   }
 
   getExcel(

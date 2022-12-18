@@ -51,30 +51,19 @@ export class StockTableComponent implements OnInit {
     }
     this.columnDefs = [
       {
-        headerName: 'Código',
-        valueFormatter: (params) => { return params.data.product.code; },
-        width: 70,
-        minWidth: 70
-      },
-      {
         headerName: 'Producto',
-        valueFormatter: (params) => { return params.data.product.displayName; },
+        valueFormatter: (params) => { return params.data.product.name; },
         minWidth: 250
       },
       {
         headerName: 'Precio',
-        cellRenderer: (params) => { return this.htmlFormat(params.data.product); },
+        cellRenderer: (params) => { return params.data.product.price; },
         minWidth: 60
       },
       {
         headerName: 'Cantidad',
         valueFormatter: (params) => { return params.data.quantity; },
         minWidth: 60
-      },
-      {
-        headerName: 'Ubicación',
-        valueFormatter: (params) => { return params.data.location.name; },
-        minWidth: 200
       }
     ];
   }

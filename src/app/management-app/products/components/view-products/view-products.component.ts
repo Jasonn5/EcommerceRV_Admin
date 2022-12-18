@@ -106,19 +106,9 @@ export class ViewProductsComponent implements OnInit {
 
     this.columnDefs = [
       {
-        headerName: 'Código',
-        valueFormatter: (params) => { return params.data.code; },
-        minWidth: 100
-      },
-      {
         headerName: 'Nombre',
-        valueFormatter: (params) => { return params.data.displayName; },
+        valueFormatter: (params) => { return params.data.name; },
         minWidth: 250
-      },
-      {
-        headerName: 'Categoría',
-        valueFormatter: (params) => { return params.data.category != null ? params.data.category.name : "NINGUNA"; },
-        minWidth: 100
       },
       {
         headerName: 'Precio de venta (Bs.)',

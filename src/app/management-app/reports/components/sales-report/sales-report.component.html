@@ -2,7 +2,7 @@
     <nb-card-header>Parámetros</nb-card-header>
     <nb-card-body>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label style="font-weight: bold;">Fecha inicio:</label>
                 <div class="card">
                     <div class="input-group">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label style="font-weight: bold;">Fecha fin:</label>
                 <div class="card">
                     <div class="input-group">
@@ -34,12 +34,6 @@
                 <div class="pt-4" style="text-align: center;">
                     <button type="button" class="btn btn-primary" [disabled]="start==null || end==null"
                         (click)="getPdf()">Generar PDF</button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="pt-4" style="text-align: center;">
-                    <button type="button" class="btn btn-primary" [disabled]="start==null || end==null"
-                        (click)="getExcel()">Generar Excel</button>
                 </div>
             </div>
         </div>

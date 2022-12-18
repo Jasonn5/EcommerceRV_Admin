@@ -7,21 +7,7 @@
                     (keydown.enter)="$event.preventDefault()">
                     <label class="font-italic mb-3">Los campos marcados con * son obligatorios.</label>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label><strong>Código*</strong></label>
-                                <input type="text" class="form-control" placeholder="Código" formControlName="code">
-                                <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert text-danger">
-                                    <div *ngIf="code.errors.required">
-                                        El código del producto es requerido.
-                                    </div>
-                                    <div *ngIf="code.errors.maxlength">
-                                        El código debe tener máximo 100 caracteres.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label><strong>Nombre*</strong></label>
                                 <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
@@ -40,7 +26,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label><strong>Precio</strong></label>
                                 <div class="input-group">
@@ -57,149 +43,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div><!-- 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>Tipo de medida</strong></label>
-                                <select class="form-control" formControlName="measureTypeId">
-                                    <option [value]=1>Unidad</option>
-                                    <option [value]=2>Metro</option>
-                                    <option [value]=4>Centímetros</option>
-                                    <option [value]=3>Litro</option>
-                                    <option [value]=5>Mililitros</option>
-                                    <option [value]=6>Kilogramo</option>
-                                    <option [value]=7>Gramos</option>
-                                </select>
+                                <label><strong>Cantidad de stock bajo</strong></label>
+                                <input type="text" class="form-control" placeholder="Cantidad de stock bajo"
+                                    formControlName="stockAlarm">
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Precio B</strong></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Bs.</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Precio"
-                                        formControlName="priceB">
-                                </div>
-
-                                <div *ngIf="priceB.invalid && (priceB.dirty || priceB.touched)"
-                                    class="alert text-danger">
-                                    <div *ngIf="priceB.errors.pattern">
-                                        Solo se aceptan números.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Precio C</strong></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Bs.</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Precio"
-                                        formControlName="priceC">
-                                </div>
-
-                                <div *ngIf="priceC.invalid && (priceC.dirty || priceC.touched)"
-                                    class="alert text-danger">
-                                    <div *ngIf="priceC.errors.pattern">
-                                        Solo se aceptan números.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Precio D</strong></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Bs.</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Precio"
-                                        formControlName="priceD">
-                                </div>
-
-                                <div *ngIf="priceD.invalid && (priceD.dirty || priceD.touched)"
-                                    class="alert text-danger">
-                                    <div *ngIf="priceD.errors.pattern">
-                                        Solo se aceptan números.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Precio E</strong></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Bs.</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Precio"
-                                        formControlName="priceE">
-                                </div>
-
-                                <div *ngIf="priceE.invalid && (priceE.dirty || priceE.touched)"
-                                    class="alert text-danger">
-                                    <div *ngIf="priceE.errors.pattern">
-                                        Solo se aceptan números.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Pack</strong></label>
-                                <input type="text" class="form-control" placeholder="Código" formControlName="pack">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Size</strong></label>
-                                <input type="text" class="form-control" placeholder="Código" formControlName="size">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Categoría</strong></label>
-                                <select class="form-control" formControlName="categoryId" (change)="getSubCategories()">
-                                    <option [value]=0>NINGUNA</option>
-                                    <option *ngFor="let category of categories" [value]="category.id">
-                                        {{category.name}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><strong>Subcategoría</strong></label>
-                                <select class="form-control" formControlName="subCategoryId">
-                                    <option [value]=0>NINGUNA</option>
-                                    <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">
-                                        {{subcategory.name}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Cantidad de stock bajo</strong></label>
-                        <input type="text" class="form-control" placeholder="Cantidad de stock bajo"
-                            formControlName="stockAlarm">
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Código de barras</strong></label>
-                        <input type="text" class="form-control" placeholder="Código de barras"
-                            formControlName="codebar">
+                        </div> -->
                     </div>
                     <div class="form-group">
                         <label><strong>Descripción</strong></label>
@@ -215,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label><strong>Imagen </strong><label class="font-italic mb-3">(Tamaño maximo: 1 Mb -
                                 Formatos:
                                 .png, .jpg y .jpeg.)</label></label><br />
@@ -233,7 +84,7 @@
                         <button *ngIf="thumbnailData" type="button" (click)="removeFile()"
                             class="btn btn-secondary btn-sm">Remover
                             imagen</button>
-                    </div>
+                    </div> -->
                     <button type="submit" [disabled]="!productEditorForm.valid" class="btn btn-primary">
                         {{textButtom}}
                     </button>

@@ -120,7 +120,7 @@ export class UpdateOrderComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.spinner.show();
-        this.orderService.updateOrder(this.order, this.orderDetails, this.selectedClient, this.selectedSeller).subscribe(() => {
+        this.orderService.updateOrder(this.order, this.orderDetails).subscribe(() => {
           this.toastrService.primary('Pedido actualizado', 'Éxito');
           this.spinner.hide();
         });
@@ -136,7 +136,7 @@ export class UpdateOrderComponent implements OnInit {
 
   searchStocks(value: string) {
     this.spinner.show();
-    this.stockService.searchStocks(value).subscribe(stocks => {
+    this.stockService.searchStocks().subscribe(stocks => {
       this.stocks = stocks;
       this.searchStockIsEmpty = value == '';
       this.spinner.hide();

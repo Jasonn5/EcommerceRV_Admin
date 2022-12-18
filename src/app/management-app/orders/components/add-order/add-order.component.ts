@@ -22,14 +22,7 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./add-order.component.scss']
 })
 export class AddOrderComponent implements OnInit {
-  public selectedClient: Client;
-  public selectedSeller: Seller;
-  public client: Client;
   public order: Order;
-  public clients: Client[] = [];
-  public sellers: Seller[] = [];
-  public searchClientIsEmpty: boolean = true;
-  @ViewChild('searchClient', { static: true }) searchClient: ElementRef;
   public stocks: Stock[] = [];
   public searchStockIsEmpty: boolean = true;
   @ViewChild('searchStock', { static: true }) searchStock: ElementRef;
@@ -39,17 +32,13 @@ export class AddOrderComponent implements OnInit {
   public reloadOrderDetail: Subject<boolean> = new Subject<boolean>();
   public reloadProducts: Subject<boolean> = new Subject<boolean>();
   public totalCost = 0;
-  public sellerId: number = 0;
   public isFromSale: boolean = true;
-  public isSaleInCash: boolean = true;
-  public creditDays: number = 0;
 
   constructor(
     private stockService: StockService,
     private orderService: OrderService,
     private toastrService: NbToastrService,
     private modalService: NgbModal,
-    private sellerService: SellerService,
     private internetConnectionService: InternetConnectionService,
     private spinner: NgxSpinnerService
   ) { }
@@ -62,24 +51,10 @@ export class AddOrderComponent implements OnInit {
       size: 'md',
       centered: true
     }
-    this.selectedClient = new Client;
-    this.selectedClient.id = 0;
     this.order = new Order;
     this.orderDetails = [];
     this.orderDetailId = 0;
     this.searchStocks('');
-
-    fromEvent(this.searchStock.nativeElement, 'keyup').pipe(
-      map((event: any) => {
-        return event.target.value;
-      }),
-      debounceTime(1000)
-    ).subscribe(text => {
-      this.searchStocks(text);
-    });
-    this.sellerService.listSellers('').subscribe(sellers => {
-      this.sellers = sellers;
-    });
   }
 
   addOrder() {
@@ -87,21 +62,12 @@ export class AddOrderComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmationModalComponent, this.modalOptions);
     modalRef.componentInstance.title = 'Pedido';
     modalRef.componentInstance.message = '¿Desea registrar el pedido?';
-    this.order.saleInCash = this.isSaleInCash;
-    this.order.creditDays = this.creditDays
     modalRef.result.then((result) => {
       if (result) {
         this.spinner.show();
-        this.orderService.addOrder(this.order, this.orderDetails, this.selectedClient, this.selectedSeller).subscribe(() => {
+        this.orderService.addOrder(this.order, this.orderDetails).subscribe(() => {
           this.toastrService.primary('Pedido registrado', 'Éxito');
           this.orderDetails = [];
-          this.client = new Client;
-          this.client.id = 0;
-          this.isSaleInCash = true;
-          this.selectedClient = new Client;
-          this.selectedClient.id = 0;
-          this.selectedSeller = null;
-          this.sellerId = 0;
           this.totalCost = 0;
           this.spinner.hide();
         });
@@ -109,43 +75,23 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
-  addClientToOrder(client: Client) {
-    if (client != null) {
-      this.selectedClient = client;
-    }
-  }
-
   searchStocks(value: string) {
     this.spinner.show();
-    this.stockService.searchStocks(value).subscribe(stocks => {
+    this.stockService.searchStocks().subscribe(stocks => {
       this.stocks = stocks;
       this.searchStockIsEmpty = value == '';
       this.spinner.hide();
     });
   }
 
-  selectSeller() {
-    this.selectedSeller = this.sellerId != 0 ? this.sellers.find(s => s.id == this.sellerId) : null;
-  }
-
-  paymentType(event: boolean) {
-    this.isSaleInCash = event;
-  }
-
   addProductToOrderDetail(stock: Stock) {
     var newOrderDetail = new OrderDetail();
     newOrderDetail.priceList = [];
     newOrderDetail.stockId = stock.id;
-    newOrderDetail.productName = stock.product.displayName;
-    newOrderDetail.locationName = stock.location.name;
+    newOrderDetail.productName = stock.product.name;
     newOrderDetail.quantity = 1;
     newOrderDetail.unitaryPrice = stock.product.price;
     newOrderDetail.totalPrice = stock.product.price;
-    stock.product.price != 0 ? newOrderDetail.priceList.push(stock.product.price) : null;
-    stock.product.priceB != 0 ? newOrderDetail.priceList.push(stock.product.priceB) : null;
-    stock.product.priceC != 0 ? newOrderDetail.priceList.push(stock.product.priceC) : null;
-    stock.product.priceD != 0 ? newOrderDetail.priceList.push(stock.product.priceD) : null;
-    stock.product.priceE != 0 ? newOrderDetail.priceList.push(stock.product.priceE) : null;
     this.orderDetailId++;
     //@ts-ignore
     newOrderDetail.id = this.orderDetailId;

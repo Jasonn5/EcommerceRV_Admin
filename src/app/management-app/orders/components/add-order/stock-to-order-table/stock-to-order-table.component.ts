@@ -51,14 +51,8 @@ export class StockToOrderTableComponent implements OnInit {
     }
     this.columnDefs = [
       {
-        headerName: 'Código',
-        valueFormatter: (params) => { return params.data.product.code; },
-        width: 70,
-        minWidth: 70
-      },
-      {
         headerName: 'Producto',
-        valueFormatter: (params) => { return params.data.product.displayName; },
+        valueFormatter: (params) => { return params.data.product.name; },
         minWidth: 250
       },
       {
@@ -70,11 +64,6 @@ export class StockToOrderTableComponent implements OnInit {
         headerName: 'Cantidad',
         valueFormatter: (params) => { return params.data.quantity; },
         minWidth: 60
-      },
-      {
-        headerName: 'Ubicación',
-        valueFormatter: (params) => { return params.data.location.name; },
-        minWidth: 200
       }
     ];
   }

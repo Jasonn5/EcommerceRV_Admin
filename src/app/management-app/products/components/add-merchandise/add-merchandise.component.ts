@@ -109,7 +109,7 @@ export class AddMerchandiseComponent implements OnInit {
                 component.billNumber = '';
                 component.billUrl = '';
                 component.reloadProducts.next(true);
-                component.reportService.getPdf(new Date, new Date, ReportsEnum.MerchandiseRegisterReport, 0, 0, 0, merchandiseRegister.id).subscribe(pdf => {
+                component.reportService.getPdf(new Date, new Date).subscribe(pdf => {
                   component.pdfService.Open(pdf);
                   component.spinner.hide();
                 });
@@ -133,7 +133,7 @@ export class AddMerchandiseComponent implements OnInit {
             this.billNumber = '';
             this.billUrl = '';
             this.reloadProducts.next(true);
-            this.reportService.getPdf(new Date, new Date, ReportsEnum.MerchandiseRegisterReport, 0, 0, 0, merchandiseRegister.id).subscribe(pdf => {
+            this.reportService.getPdf(new Date, new Date).subscribe(pdf => {
               this.pdfService.Open(pdf);
               this.spinner.hide();
             });

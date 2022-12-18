@@ -172,7 +172,7 @@ export class ViewMerchandiseRegistersComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result) {
         this.spinner.show();
-        this.reportService.getPdf(new Date, new Date, ReportsEnum.MerchandiseRegisterReport, 0, 0, 0, mr.rowData.id).subscribe(pdf => {
+        this.reportService.getPdf(new Date, new Date).subscribe(pdf => {
           this.pdfService.Open(pdf);
           this.spinner.hide();
         },

@@ -71,11 +71,6 @@ export class SaleDetailTableComponent implements OnInit {
         minWidth: 75
       },
       {
-        headerName: 'Ubicación',
-        valueFormatter: (params) => { return params.data.locationName; },
-        minWidth: 200
-      },
-      {
         headerName: 'P. Unitario',
         valueFormatter: (params) => { return Number(params.data.unitaryPrice).toFixed(2) + " Bs."; },
         minWidth: 80

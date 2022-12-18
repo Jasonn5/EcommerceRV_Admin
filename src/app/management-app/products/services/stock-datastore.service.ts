@@ -20,8 +20,8 @@ export class StockDatastoreService {
     return this.http.patch<Stock>(this.ROOT_URL + '/' + stock.id, stock);
   }
 
-  list(value) {
-    return this.http.get<Stock[]>(this.ROOT_URL + '?search=' + value);
+  list() {
+    return this.http.get<Stock[]>(this.ROOT_URL);
   }
 
   listStockByLocation(value, locationId) {

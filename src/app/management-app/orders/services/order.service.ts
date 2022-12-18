@@ -12,22 +12,18 @@ export class OrderService {
 
   constructor(private orderDatastoreService: OrderDatastoreService,) { }
 
-  public addOrder(order: Order, orderDetails: OrderDetail[], client: Client, seller: Seller) {
+  public addOrder(order: Order, orderDetails: OrderDetail[]) {
     let newOrder = new Order();
     newOrder.saleInCash = order.saleInCash;
     newOrder.creditDays = order.creditDays;
     newOrder.orderDetails = orderDetails;
-    newOrder.client = client;
-    newOrder.seller = seller;
 
     return this.orderDatastoreService.add(newOrder);
   }
 
-  public updateOrder(order: Order, orderDetails: OrderDetail[], client: Client, seller: Seller) {
+  public updateOrder(order: Order, orderDetails: OrderDetail[]) {
     order.orderDetails = [];
     order.orderDetails = orderDetails;
-    order.client = client;
-    order.seller = seller;
 
     return this.orderDatastoreService.update(order);
   }

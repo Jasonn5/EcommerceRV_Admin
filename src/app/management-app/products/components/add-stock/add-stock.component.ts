@@ -17,8 +17,6 @@ import { StockService } from '../../services/stock.service';
 })
 export class AddStockComponent implements OnInit {
   public selectedProduct: Product;
-  public locations: Location[] = [];
-  public selectedLocation: Location;
   public locationId: number = 0;
   public quantity: number = 1;
   public stocks: Stock[] = [];
@@ -42,15 +40,6 @@ export class AddStockComponent implements OnInit {
     this.internetConnectionService.verifyInternetConnection();
     this.selectedProduct = new Product();
     this.searchText = '';
-    this.locationService.listLocations().subscribe(locations => {
-      this.locations = locations;
-      if (this.locations.length > 0) {
-        this.locationId = this.locations[0].id;
-        this.selectedLocation = this.locations[0]
-        this.getStocksByLocation(this.searchText);
-      }
-      this.spinner.hide();
-    });
 
     fromEvent(this.searchRef.nativeElement, 'keyup').pipe(
       map((event: any) => {
@@ -62,15 +51,11 @@ export class AddStockComponent implements OnInit {
     });
   }
 
-  selectProduct(product: Product) {
+  selectProduct(product: Product) { 
     this.selectedProduct = product;
     this.canSubtract = this.stocks.find(s => s.product.id == this.selectedProduct.id) ? true : false;
   }
 
-  selectLocation() {
-    this.selectedLocation = this.locations.find(l => l.id == this.locationId);
-    this.getStocksByLocation(this.searchText);
-  }
 
   addOrSubtractStock(value: boolean = false) {
     if (this.stocks.find(s => s.product.id == this.selectedProduct.id)) {
@@ -83,7 +68,7 @@ export class AddStockComponent implements OnInit {
         this.quantity = stockToEdit.quantity + this.quantity;
         stockToEdit.price = this.modifyPrice ? parseFloat(this.productPrice.toString()) : parseFloat(this.selectedProduct.price.toString());
       }
-      this.stockService.updtateStock(stockToEdit, this.quantity, this.selectedProduct, this.selectedLocation).subscribe(() => {
+      this.stockService.updtateStock(stockToEdit, this.quantity, this.selectedProduct).subscribe(() => {
         this.toastrService.primary('Stock de producto actualizado', 'Éxito');
         this.getStocksByLocation(this.searchText);
         this.quantity = 1;
@@ -101,7 +86,7 @@ export class AddStockComponent implements OnInit {
     } else {
       this.spinner.show();
       var price = this.modifyPrice ? parseFloat(this.productPrice.toString()) : parseFloat(this.selectedProduct.price.toString());
-      this.stockService.addStock(this.quantity, price, this.selectedProduct, this.selectedLocation).subscribe(() => {
+      this.stockService.addStock(this.quantity, price, this.selectedProduct).subscribe(() => {
         this.toastrService.primary('Stock de producto registrado', 'Éxito');
         this.getStocksByLocation(this.searchText);
         this.quantity = 1;
@@ -112,9 +97,9 @@ export class AddStockComponent implements OnInit {
     }
   }
 
-  getStocksByLocation(value: string) {
+  getStocksByLocation(value: string) {debugger;
     this.spinner.show();
-    this.stockService.getStocksByLocation(value, this.locationId).subscribe(stocks => {
+    this.stockService.searchStocks().subscribe(stocks => {debugger;
       this.stocks = stocks;
       this.searchIsEmpty = value == '';
       this.searchText = value;

@@ -20,35 +20,18 @@ export class SaleService {
     private auth: AuthService
   ) { }
 
-  public addSale(saleDetails: SaleDetail[], client: Client, saleDate, credit: Credit, seller: Seller) {
+  public addSale(saleDetails: SaleDetail[], saleDate) {
     let newSale = new Sale();
     newSale.description = 'Registro de venta';
     newSale.date = saleDate;
     newSale.saleDetails = saleDetails;
-    newSale.seller = seller;
-
-    if (credit != null) {
-      newSale.credit = credit;
-      newSale.client = client;
-
-      return this.saleStoreService.add(newSale);
-    }
-
-    if (client.id != 0) {
-      newSale.client = client;
-
-      return this.saleStoreService.add(newSale);
-    }
 
     return this.saleStoreService.add(newSale);
   }
 
-  public updateSale(saleToUpdate: Sale, saleDetails: SaleDetail[], client: Client, credit: Credit, seller: Seller) {
+  public updateSale(saleToUpdate: Sale, saleDetails: SaleDetail[]) {
     saleToUpdate.saleDetails = [];
     saleToUpdate.saleDetails = saleDetails;
-    saleToUpdate.seller = seller;
-    saleToUpdate.client = client;
-    saleToUpdate.credit = credit;
 
     return this.saleStoreService.update(saleToUpdate);
   }

@@ -43,13 +43,8 @@ export class StockProductsTableComponent implements OnInit {
 
     this.columnDefs = [
       {
-        headerName: 'Código',
-        valueFormatter: (params) => { return params.data.product.code; },
-        minWidth: 200
-      },
-      {
         headerName: 'Producto',
-        valueFormatter: (params) => { return params.data.product.displayName; },
+        valueFormatter: (params) => { return params.data.product.name; },
         minWidth: 200
       },
       {

@@ -57,21 +57,9 @@ export class ProductEditorComponent implements OnInit {
   private buildForm() {
     this.productEditorForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(3)]],
-      code: ['', [Validators.required, Validators.maxLength(100)]],
       price: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
-      priceB: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
-      priceC: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
-      priceD: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
-      priceE: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
-      discount: [0, Validators.pattern(/^(0|[1-9]\d*)?[.]?(0|[0-9]\d*)$/)],
       description: ['', Validators.maxLength(500)],
-      pack: [''],
-      codebar: [''],
-      size: [''],
       file: null,
-      categoryId: 0,
-      subCategoryId: 0,
-      measureTypeId: 1,
       stockAlarm: 0
     });
   }
@@ -88,20 +76,8 @@ export class ProductEditorComponent implements OnInit {
           }
           this.productEditorForm.patchValue({
             name: this.productToEdit.name,
-            code: this.productToEdit.code,
             price: this.productToEdit.price,
-            priceB: this.productToEdit.priceB,
-            priceC: this.productToEdit.priceC,
-            priceD: this.productToEdit.priceD,
-            priceE: this.productToEdit.priceE,
-            discount: this.productToEdit.discount,
             description: this.productToEdit.description,
-            pack: this.productToEdit.pack,
-            size: this.productToEdit.size,
-            codebar: this.productToEdit.codebar,
-            categoryId: this.productToEdit.category != null ? this.productToEdit.category.id : 0,
-            subCategoryId: this.productToEdit.subCategory != null ? this.productToEdit.subCategory.id : 0,
-            measureTypeId: this.productToEdit.measureTypeId,
             stockAlarm: this.productToEdit.stockAlarm
           });
           this.thumbnail = this.productToEdit.imageUrl;

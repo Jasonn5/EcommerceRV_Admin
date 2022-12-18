@@ -13,32 +13,27 @@ export class StockService {
 
   constructor(private stockDatatoreService: StockDatastoreService) { }
 
-  public addStock(quantity, price, product: Product, location: Location) {
+  public addStock(quantity, price, product: Product) {
     let newStock = new Stock;
     newStock.quantity = parseInt(quantity);
     newStock.price = parseFloat(price);
     newStock.categoryName = product.category != null ? product.category.name : '';
     newStock.product = product;
-    newStock.location = location;
 
     return this.stockDatatoreService.add(newStock);
   }
 
-  public updtateStock(stockToEdit: Stock, quantity, product: Product, location: Location) {
+  public updtateStock(stockToEdit: Stock, quantity, product: Product) {
     stockToEdit.quantity = parseInt(quantity);
     stockToEdit.product = product;
-    stockToEdit.location = location;
 
     return this.stockDatatoreService.update(stockToEdit);
   }
 
-  public searchStocks(value: string) {
-    return this.stockDatatoreService.list(value);
+  public searchStocks() {
+    return this.stockDatatoreService.list();
   }
 
-  public getStocksByLocation(value: string, locationId: number) {
-    return this.stockDatatoreService.listStockByLocation(value, locationId);
-  }
 
   public findById(id) {
     return this.stockDatatoreService.findById(id);

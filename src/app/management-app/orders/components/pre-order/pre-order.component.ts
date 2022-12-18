@@ -77,7 +77,7 @@ export class PreOrderComponent implements OnInit {
 
   searchStocks(value: string) {
     this.spinner.show();
-    this.stockService.searchStocks(value).subscribe(stocks => {
+    this.stockService.searchStocks().subscribe(stocks => {
       this.stocks = stocks;
       this.searchStockIsEmpty = value == '';
       this.spinner.hide();

@@ -42,18 +42,9 @@ import { ProviderBillEditorComponent } from './providers/components/provider-bil
 import { ProviderEditorComponent } from './providers/components/provider-editor/provider-editor.component';
 import { ViewProviderBillsComponent } from './providers/components/view-provider-bills/view-provider-bills.component';
 import { ViewProvidersComponent } from './providers/components/view-providers/view-providers.component';
-import { ClientKardexReportComponent } from './reports/components/client-kardex-report/client-kardex-report.component';
 import { DetailedSalesReportComponent } from './reports/components/detailed-sales-report/detailed-sales-report.component';
-import { EntryReportComponent } from './reports/components/entry-report/entry-report.component';
-import { ExpenseReportComponent } from './reports/components/expense-report/expense-report.component';
-import { MerchandiseRegistersReportComponent } from './reports/components/merchandise-registers-report/merchandise-registers-report.component';
-import { PhysicalInventoryReportComponent } from './reports/components/physical-inventory-report/physical-inventory-report.component';
-import { ProductKardexReportComponent } from './reports/components/product-kardex-report/product-kardex-report.component';
 import { ProductReportComponent } from './reports/components/product-report/product-report.component';
-import { SalesByDayReportComponent } from './reports/components/sales-by-day-report/sales-by-day-report.component';
-import { SalesBySellerReportComponent } from './reports/components/sales-by-seller-report/sales-by-seller-report.component';
 import { SalesReportComponent } from './reports/components/sales-report/sales-report.component';
-import { SalesVsExpensesGlobalReportComponent } from './reports/components/sales-vs-expenses-global-report/sales-vs-expenses-global-report.component';
 import { AddSaleComponent } from './sales/components/add-sale/add-sale.component';
 import { UpdateSaleComponent } from './sales/components/update-sale/update-sale.component';
 import { ViewSalesComponent } from './sales/components/view-sales/view-sales.component';
@@ -397,38 +388,6 @@ const routes: Routes = [{
       }
     },
     {
-      path: "reports/product-kardex-report",
-      component: ProductKardexReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin,Basic'
-      }
-    },
-    {
-      path: "reports/client-kardex-report",
-      component: ClientKardexReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin'
-      }
-    },
-    {
-      path: "reports/physical-inventory-report",
-      component: PhysicalInventoryReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin,Basic'
-      }
-    },
-    {
-      path: "reports/entry-report",
-      component: EntryReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin,Basic'
-      }
-    },
-    {
       path: "reports/sales-report",
       component: SalesReportComponent,
       canActivate: [AuthGuardService],
@@ -445,48 +404,8 @@ const routes: Routes = [{
       }
     },
     {
-      path: "reports/expense-report",
-      component: ExpenseReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin,Basic'
-      }
-    },
-    {
-      path: "reports/sales-by-seller-report",
-      component: SalesBySellerReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin'
-      }
-    },
-    {
-      path: "reports/sales-by-day",
-      component: SalesByDayReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin'
-      }
-    },
-    {
       path: "reports/detailed-sales-report",
       component: DetailedSalesReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin'
-      }
-    },
-    {
-      path: "reports/sales-vs-expenses-global-report",
-      component: SalesVsExpensesGlobalReportComponent,
-      canActivate: [AuthGuardService],
-      data: {
-        roles: 'SuperAdmin,Admin,Basic'
-      }
-    },
-    {
-      path: "reports/merchandise-registers-report",
-      component: MerchandiseRegistersReportComponent,
       canActivate: [AuthGuardService],
       data: {
         roles: 'SuperAdmin,Admin'

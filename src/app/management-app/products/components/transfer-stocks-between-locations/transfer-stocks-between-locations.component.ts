@@ -49,7 +49,7 @@ export class TransferStocksBetweenLocationsComponent implements OnInit {
   }
 
   getStocksByLocation(firstLocation: boolean) {
-    if (firstLocation) {
+    /* if (firstLocation) {
       this.spinner.show();
       this.stockService.getStocksByLocation('', this.locationIdOne).subscribe(stocks => {
         this.originStockList = stocks;
@@ -61,7 +61,7 @@ export class TransferStocksBetweenLocationsComponent implements OnInit {
         this.targetStockList = stocks;
         this.spinner.hide();
       });
-    }
+    } */
   }
 
   selectStock(selectedStock: Stock) {

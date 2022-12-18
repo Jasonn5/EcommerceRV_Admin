@@ -76,12 +76,6 @@ export class ViewOrdersComponent implements OnInit {
     this.startDate = new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getUTCDate());
     this.endDate = this.calendar.getToday();
     this.loadData();
-    this.saleConfigurationService.getConfiguration(this.authService.getUsername()).subscribe(configuration => {
-      this.saleConfiguration = configuration;
-      this.dosage = this.saleConfiguration.billConfiguration != null ? this.saleConfiguration.billConfiguration.name : 'NINGUNA';
-      this.cashRegisterCode = this.saleConfiguration.cashRegister != null ? this.saleConfiguration.cashRegister.code : 'NINGUNA';
-      this.cashRegister = this.saleConfiguration.cashRegister;
-    });
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop',
@@ -163,18 +157,6 @@ export class ViewOrdersComponent implements OnInit {
         width: 100
       },
       {
-        headerName: 'Cliente',
-        valueFormatter: (params) => { return params.data.client.name; },
-        minWidth: 200,
-        width: 200
-      },
-      {
-        headerName: 'Vendedor',
-        valueFormatter: (params) => { return params.data.seller.name; },
-        minWidth: 200,
-        width: 200
-      },
-      {
         headerName: 'Fecha',
         valueFormatter: (params) => { return this.datepipe.transform(params.data.orderDate, 'dd/MM/yyyy HH:mm:ss'); },
         minWidth: 150,
@@ -200,17 +182,6 @@ export class ViewOrdersComponent implements OnInit {
           onClick: this.viewOrderDetail.bind(this),
           label: 'eye-outline',
           tooltip: 'Ver detalle del pédido',
-          alwaysDisplayIcon: true
-        },
-        width: 60,
-        minWidth: 60
-      },
-      {
-        cellRenderer: 'iconRenderer',
-        cellRendererParams: {
-          onClick: this.sendOrderId.bind(this),
-          label: 'edit-2-outline',
-          tooltip: 'Editar',
           alwaysDisplayIcon: true
         },
         width: 60,

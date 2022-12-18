@@ -145,7 +145,7 @@ export class UpdateMerchandiseRegisterComponent implements OnInit {
                   component.uploadService.deleteFile(component.newFileName, component.folderName);
                 }
                 component.toastrService.primary('Información actualizada', 'Éxito', {});
-                component.reportService.getPdf(new Date, new Date, ReportsEnum.MerchandiseRegisterReport, 0, 0, 0, component.merchandiseRegister.id).subscribe(pdf => {
+                component.reportService.getPdf(new Date, new Date).subscribe(pdf => {
                   component.pdfService.Open(pdf);
                   component.spinner.hide();
                 });
@@ -164,7 +164,7 @@ export class UpdateMerchandiseRegisterComponent implements OnInit {
           this.billNumber = this.billNumber != '' ? this.billNumber : '0';
           this.merchandiseRegisterService.updateMerchandiseRegister(this.merchandiseRegister, this.merchandiseDetails, this.selectedLocation, date, this.selectedProvider, this.billNumber, this.billUrl).subscribe(() => {
             this.toastrService.primary('Información actualizada', 'Éxito', {});
-            this.reportService.getPdf(new Date, new Date, ReportsEnum.MerchandiseRegisterReport, 0, 0, 0, this.merchandiseRegister.id).subscribe(pdf => {
+            this.reportService.getPdf(new Date, new Date).subscribe(pdf => {
               this.pdfService.Open(pdf);
               this.spinner.hide();
             });

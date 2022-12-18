@@ -38,7 +38,7 @@ export class DetailedSalesReportComponent implements OnInit {
     this.spinner.show();
     let startDate = new Date(this.start.year, this.start.month - 1, this.start.day);
     let endDate = new Date(this.end.year, this.end.month - 1, this.end.day);
-    this.reportService.getPdf(startDate, endDate, this.reportId).subscribe(pdf => {
+    this.reportService.getPdf(startDate, endDate).subscribe(pdf => {
       this.pdfService.Open(pdf);
       this.spinner.hide();
     });

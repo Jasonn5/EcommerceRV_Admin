@@ -119,11 +119,6 @@ export class ViewSalesComponent implements OnInit {
         minWidth: 80
       },
       {
-        headerName: 'Cliente',
-        valueFormatter: (params) => { return params.data.client != null ? params.data.client.name : "SIN NOMBRE"; },
-        minWidth: 180
-      },
-      {
         headerName: 'Descripción',
         valueFormatter: (params) => { return params.data.description; },
         minWidth: 250
@@ -145,19 +140,6 @@ export class ViewSalesComponent implements OnInit {
           label: 'eye-outline',
           tooltip: 'Ver detalle de venta',
           alwaysDisplayIcon: true
-        },
-        width: 60,
-        minWidth: 60
-      },
-      {
-        cellRenderer: 'iconRenderer',
-        cellRendererParams: {
-          onClick: this.sendSaleId.bind(this),
-          label: 'edit-2-outline',
-          tooltip: 'Editar',
-          alwaysDisplayIcon: false,
-          checkValueToDisplay: false,
-          statusValue: 'statusId'
         },
         width: 60,
         minWidth: 60
@@ -188,19 +170,6 @@ export class ViewSalesComponent implements OnInit {
         width: 60,
         minWidth: 60,
         hide: !this.isBilling
-      },
-      {
-        cellRenderer: 'iconRenderer',
-        cellRendererParams: {
-          onClick: this.cancelSale.bind(this),
-          label: 'close-square-outline',
-          tooltip: 'Cancelar venta',
-          alwaysDisplayIcon: false,
-          checkValueToDisplay: false,
-          statusValue: 'statusId'
-        },
-        width: 60,
-        minWidth: 60
       }
     ];
   }

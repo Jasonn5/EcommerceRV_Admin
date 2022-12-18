@@ -176,7 +176,7 @@ export class UpdateSaleComponent implements OnInit {
 
   searchProducts(value: string) {
     this.spinner.show();
-    this.stockService.searchStocks(value).subscribe(stocks => {
+    this.stockService.searchStocks().subscribe(stocks => {
       this.saleDetails.forEach(sd => {
         var stock = stocks.find(s => s.id == sd.stockId);
         if (stock && sd.id < 0) {
@@ -250,7 +250,7 @@ export class UpdateSaleComponent implements OnInit {
         }
         var date = new Date(this.saleDate.year, this.saleDate.month - 1, this.saleDate.day, 0, 0, 0);
         this.sale.date = date; //this.datepipe.transform(date, "yyyy-MM-dd");
-        this.saleService.updateSale(this.sale, this.saleDetails, this.selectedClient, this.credit, this.selectedSeller).subscribe(sale => {
+        this.saleService.updateSale(this.sale, this.saleDetails).subscribe(sale => {
           this.toastrService.primary('Venta actualizada', 'Éxito', {});
           this.saleService.printReceipt(this.sale.id, false).subscribe(pdf => {
             this.pdfService.Open(pdf);

@@ -32,7 +32,7 @@ export class ProductsToTransferTableComponent implements OnInit {
         return event.target.value;
       }),
       debounceTime(1000)
-    ).subscribe(text => {
+    ).subscribe((text : any) => {
       this.searchProducts(text);
     });
   }
@@ -60,18 +60,8 @@ export class ProductsToTransferTableComponent implements OnInit {
 
     this.columnDefs = [
       {
-        headerName: 'Código',
-        valueFormatter: (params) => { return params.data.code; },
-        minWidth: 200
-      },
-      {
         headerName: 'Nombre',
-        valueFormatter: (params) => { return params.data.displayName; },
-        minWidth: 200
-      },
-      {
-        headerName: 'Categoría',
-        valueFormatter: (params) => { return params.data.category != null ? params.data.category.name : "NINGUNA"; },
+        valueFormatter: (params) => { return params.data.name; },
         minWidth: 200
       },
       {

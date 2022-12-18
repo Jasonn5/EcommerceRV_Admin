@@ -1,22 +1,3 @@
-<nb-card>
-    <nb-card-body>
-        <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-2" style="text-align: right;">
-                <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    (change)="importExcel($event)" #fileInput>
-                <button type="button" (click)="fileInput.click()" class="btn btn-secondary btn-sm mr-1">
-                    Importar Excel</button>
-            </div>
-            <div class="col-md-2" style="text-align: right; padding-top: 0.5rem;">
-                <a target="_self" href="../../../../../assets/excel/ProductsTemplate.xlsx"
-                    download="ProductsTemplate.xlsx">
-                    Descargar Template
-                </a>
-            </div>
-        </div>
-    </nb-card-body>
-</nb-card>
 <div>
     <nb-card>
         <nb-card-header>

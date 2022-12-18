@@ -74,11 +74,6 @@ export class OrderDetailTableComponent implements OnInit {
         minWidth: 80
       },
       {
-        headerName: 'Ubicación',
-        valueFormatter: (params) => { return params.data.locationName; },
-        minWidth: 120
-      },
-      {
         headerName: 'Precio Unitario',
         valueFormatter: (params) => { return Number(params.data.unitaryPrice).toFixed(2) + " Bs."; },
         minWidth: 120
